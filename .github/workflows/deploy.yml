@@ -34,6 +34,9 @@ jobs:
           NEWS_CATEGORIES=${{ vars.NEWS_CATEGORIES }}
           NEWS_API_URL=${{ vars.NEWS_API_URL }}
           EOF
+      - name: Ensure remote directory exists
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} "mkdir -p ~/go-blog"
 
       - name: Upload .env to VPS
         run: |
