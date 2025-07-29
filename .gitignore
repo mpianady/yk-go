@@ -1,0 +1,44 @@
+# Go specific
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/vendor/
+/dist/
+
+# IDE specific
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment & Config
+.env
+*.env
+.env.local
+.env.*.local
+config.yaml
+*.yaml
+
+# System specific
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+docker-compose.override.yml
+mysql_data/
+
+# Build and debug
+/bin/
+/debug/
+debug.test
+
+# Project specific
+tmp/
+logs/
+*.log

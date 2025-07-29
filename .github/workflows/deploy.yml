@@ -1,0 +1,61 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Create .env file
+        run: |
+          cat <<EOF > .env
+          DB_HOST=${{ secrets.DB_HOST }}
+          DB_PORT=${{ secrets.DB_PORT }}
+          DB_USER=${{ secrets.DB_USER }}
+          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          DB_NAME=${{ secrets.DB_NAME }}
+          DB_CHARSET=${{ secrets.DB_CHARSET }}
+          DB_PARSE_TIME=${{ secrets.DB_PARSE_TIME }}
+          DB_LOC=${{ secrets.DB_LOC }}
+          JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
+          JWT_EXPIRATION_MINUTES=${{ secrets.JWT_EXPIRATION_MINUTES }}
+          NEWS_API_KEY=${{ secrets.NEWS_API_KEY }}
+          NEWS_CATEGORIES=${{ vars.NEWS_CATEGORIES }}
+          NEWS_API_URL=${{ vars.NEWS_API_URL }}
+          EOF
+
+      - name: Upload .env to VPS
+        run: |
+          scp -o StrictHostKeyChecking=no .env ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/go-blog/.env
+
+      - name: Deploy to VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
+            set -e
+            mkdir -p ~/go-blog
+            cd ~/go-blog
+
+            echo "🔄 Git repository update"
+            if [ ! -d .git ]; then
+              git clone git@github.com:${{ github.repository }} temp-dir
+              mv temp-dir/* temp-dir/.* . 2>/dev/null || true
+              rm -rf temp-dir
+            else
+              git pull origin main
+            fi
+
+            echo "🚀 Docker Deployment"
+            docker compose down || true
+            docker compose up -d --build
+          EOF
