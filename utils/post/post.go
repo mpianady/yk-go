@@ -85,5 +85,3 @@ func GetOrCreateCategory(name string) (postModel.Category, error) {
 
 	return category, nil
 }
-
-

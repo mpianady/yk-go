@@ -17,19 +17,23 @@ func FetchCommentsForPost(postID string) ([]commentModel.Comment, error) {
 // BuildCommentTree Helper function to build a comment tree structure
 func BuildCommentTree(allComments []commentModel.Comment) []*commentDTO.CommentResponse {
 	commentMap := make(map[uint]*commentDTO.CommentResponse)
-	var roots []*commentDTO.CommentResponse
 
+	// Étape 1 : créer tous les commentaires (vides de children)
 	for _, c := range allComments {
 		cr := commentDTO.ToCommentResponse(c)
 		cr.Children = []*commentDTO.CommentResponse{}
 		commentMap[c.ID] = cr
 	}
 
+	var roots []*commentDTO.CommentResponse
+
+	// Étape 2 : remplir la hiérarchie
 	for _, c := range allComments {
 		if c.ParentID != nil {
 			parent, exists := commentMap[*c.ParentID]
 			if exists {
-				parent.Children = append(parent.Children, commentMap[c.ID])
+				child := commentMap[c.ID]
+				parent.Children = append(parent.Children, child)
 			}
 		} else {
 			roots = append(roots, commentMap[c.ID])

@@ -52,5 +52,28 @@ The API runs on `localhost:8080` and includes the following main endpoints:
 - User authentication
 - News fetching
 
+For testing purposes, you can use these credentials:
+
+- Admin account:
+  ```
+  email: demo@gmail.com
+  password: Demo!4$&
+  ```
+- Contributor account:
+  ```
+  email: contributor@gmail.com
+  password: Demo!4$&
+  ```
+- Reader account:
+  ```
+  email: reader@gmail.com
+  password: Demo!4$&
+  ```
+- Author account:
+  ```
+  email: author@gmail.com
+  password: Demo!4$&
+  ```
+
 For detailed API documentation, visit [Swagger Documentation](https://api.go.tiana-zo.site/swagger/index.html) after
 starting the server.
