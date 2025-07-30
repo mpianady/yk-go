@@ -42,7 +42,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/utils.PaginatedResponse-post_CategoryResponse"
+                            "$ref": "#/definitions/post.PaginatedCategoryResponse"
                         }
                     },
                     "404": {
@@ -85,7 +85,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/post.CategoryResponse"
+                            "$ref": "#/definitions/post.CategoryResponseCreateDoc"
                         }
                     },
                     "400": {
@@ -118,7 +118,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/post.CategoryResponse"
+                                "$ref": "#/definitions/post.CategoryResponseDoc"
                             }
                         }
                     },
@@ -153,7 +153,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/post.CategoryResponse"
+                            "$ref": "#/definitions/post.CategoryResponseDoc"
                         }
                     },
                     "404": {
@@ -203,7 +203,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/post.CategoryResponse"
+                            "$ref": "#/definitions/post.CategoryResponseDoc"
                         }
                     },
                     "400": {
@@ -340,7 +340,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/post.CommentResponse"
+                                "$ref": "#/definitions/post.CommentResponseDoc"
                             }
                         }
                     },
@@ -387,7 +387,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/utils.PaginatedResponse-post_CommentResponse"
+                            "$ref": "#/definitions/post.PaginatedCommentResponse"
                         }
                     },
                     "400": {
@@ -995,10 +995,12 @@ const docTemplate = `{
             ],
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "user@example.com"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "secret123"
                 }
             }
         },
@@ -1009,7 +1011,8 @@ const docTemplate = `{
             ],
             "properties": {
                 "refresh_token": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
                 }
             }
         },
@@ -1029,7 +1032,8 @@ const docTemplate = `{
             ],
             "properties": {
                 "refresh_token": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
                 }
             }
         },
@@ -1132,13 +1136,59 @@ const docTemplate = `{
                 }
             }
         },
-        "post.CategoryResponse": {
+        "post.CategoryResponseChildDoc": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parentId": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "post.CategoryResponseCreateDoc": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parentId": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "post.CategoryResponseDoc": {
             "type": "object",
             "properties": {
                 "children": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/post.CategoryResponse"
+                        "$ref": "#/definitions/post.CategoryResponseChildDoc"
                     }
                 },
                 "createdAt": {
@@ -1218,6 +1268,64 @@ const docTemplate = `{
                 }
             }
         },
+        "post.CommentResponseChildDoc": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "post_id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "post.CommentResponseDoc": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/post.CommentResponseChildDoc"
+                    }
+                },
+                "content": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "post_id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "post.CommentUpdateRequest": {
             "type": "object",
             "required": [
@@ -1230,6 +1338,46 @@ const docTemplate = `{
                 },
                 "status": {
                     "type": "string"
+                }
+            }
+        },
+        "post.PaginatedCategoryResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/post.CategoryResponseDoc"
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "post.PaginatedCommentResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/post.CommentResponseDoc"
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
@@ -1297,82 +1445,6 @@ const docTemplate = `{
                             "type": "string"
                         }
                     }
-                }
-            }
-        },
-        "utils.PaginatedResponse-post_CategoryResponse": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/post.CategoryResponse"
-                    }
-                },
-                "empty": {
-                    "type": "boolean"
-                },
-                "first": {
-                    "type": "boolean"
-                },
-                "hasNext": {
-                    "type": "boolean"
-                },
-                "hasPrevious": {
-                    "type": "boolean"
-                },
-                "last": {
-                    "type": "boolean"
-                },
-                "limit": {
-                    "type": "integer"
-                },
-                "page": {
-                    "type": "integer"
-                },
-                "total": {
-                    "type": "integer"
-                },
-                "totalPages": {
-                    "type": "integer"
-                }
-            }
-        },
-        "utils.PaginatedResponse-post_CommentResponse": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/post.CommentResponse"
-                    }
-                },
-                "empty": {
-                    "type": "boolean"
-                },
-                "first": {
-                    "type": "boolean"
-                },
-                "hasNext": {
-                    "type": "boolean"
-                },
-                "hasPrevious": {
-                    "type": "boolean"
-                },
-                "last": {
-                    "type": "boolean"
-                },
-                "limit": {
-                    "type": "integer"
-                },
-                "page": {
-                    "type": "integer"
-                },
-                "total": {
-                    "type": "integer"
-                },
-                "totalPages": {
-                    "type": "integer"
                 }
             }
         },

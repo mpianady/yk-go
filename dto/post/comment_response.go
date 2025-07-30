@@ -1,15 +1,48 @@
 package post
 
-import "go-blog/models/post"
+import (
+	"go-blog/models/post"
+)
+
+// swagger:model CommentResponseDoc
+type CommentResponseDoc struct {
+	ID        uint                      `json:"id"`
+	PostID    uint                      `json:"post_id"`
+	UserID    uint                      `json:"user_id"`
+	Author    string                    `json:"author"`
+	Content   string                    `json:"content"`
+	Status    string                    `json:"status"`
+	CreatedAt string                    `json:"created_at"`
+	Children  []CommentResponseChildDoc `json:"children,omitempty"`
+}
+
+// swagger:model CommentResponseChildDoc
+type CommentResponseChildDoc struct {
+	ID        uint   `json:"id"`
+	PostID    uint   `json:"post_id"`
+	UserID    uint   `json:"user_id"`
+	Author    string `json:"author"`
+	Content   string `json:"content"`
+	Status    string `json:"status"`
+	CreatedAt string `json:"created_at"`
+}
+
+// swagger:model PaginatedCommentResponse
+type PaginatedCommentResponse struct {
+	Page  int                  `json:"page"`
+	Limit int                  `json:"limit"`
+	Total int64                `json:"total"`
+	Data  []CommentResponseDoc `json:"data"`
+}
 
 type CommentResponse struct {
-	ID        uint             `json:"id"`
-	PostID    uint             `json:"post_id"`
-	UserID    uint             `json:"user_id"`
-	Author    string           `json:"author"`
-	Content   string           `json:"content"`
-	Status    string           `json:"status"`
-	CreatedAt string           `json:"created_at"`
+	ID        uint               `json:"id"`
+	PostID    uint               `json:"post_id"`
+	UserID    uint               `json:"user_id"`
+	Author    string             `json:"author"`
+	Content   string             `json:"content"`
+	Status    string             `json:"status"`
+	CreatedAt string             `json:"created_at"`
 	Children  []*CommentResponse `json:"children,omitempty"`
 }
 

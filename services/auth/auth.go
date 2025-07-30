@@ -53,8 +53,8 @@ func Register(ctx *gin.Context) {
 		Password:  hashedPassword,
 		FirstName: input.FirstName,
 		LastName:  input.LastName,
-		Role:      "READER", // valeur par défaut
-		Status:    "ACTIVE", // valeur par défaut
+		Role:      string(user.RoleReader),   // valeur par défaut
+		Status:    string(user.StatusActive), // valeur par défaut
 	}
 
 	if err := config.Db.Create(&newUser).Error; err != nil {
@@ -86,7 +86,7 @@ func Register(ctx *gin.Context) {
 // @Tags Auth
 // @Accept json
 // @Produce json
-// @Param user body auth.LoginRequest true "User login credentials"
+// @Param user body auth.LoginRequest true "User login credentials" example({"email": "user@example.com", "password": "secret123"})
 // @Success 200 {object} auth.RegisterResponse
 // @Failure 400 {object} utils.ValidationErrorResponse
 // @Failure 401 {object} utils.ErrorResponse

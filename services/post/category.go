@@ -23,7 +23,7 @@ const (
 // @Accept json
 // @Produce json
 // @Param request body post.CategoryRequest true "Category creation request"
-// @Success 201 {object} post.CategoryResponse
+// @Success 201 {object} post.CategoryResponseCreateDoc
 // @Failure 400 {object} utils.ValidationErrorResponse
 // @Failure 500 {object} utils.ErrorResponse
 // @Router /v1/categories [post]
@@ -53,7 +53,7 @@ func CreateCategory(ctx *gin.Context) {
 // @Produce json
 // @Param page query int false "Page number (default is 1)"
 // @Param limit query int false "Items per page (default is 10)"
-// @Success 200 {object} utils.PaginatedResponse[post.CategoryResponse]
+// @Success 200 {object} post.PaginatedCategoryResponse
 // @Failure 404 {object} utils.ErrorResponse
 // @Failure 500 {object} utils.ErrorResponse
 // @Router /v1/categories [get]
@@ -94,7 +94,7 @@ func GetAllCategories(ctx *gin.Context) {
 // @Description Retrieve hierarchical tree structure of all categories
 // @Tags Categories
 // @Produce json
-// @Success 200 {array} post.CategoryResponse
+// @Success 200 {array} post.CategoryResponseDoc
 // @Failure 500 {object} utils.ErrorResponse
 // @Router /v1/categories/tree [get]
 func GetCategoryTree(ctx *gin.Context) {
@@ -112,7 +112,7 @@ func GetCategoryTree(ctx *gin.Context) {
 // @Tags Categories
 // @Produce json
 // @Param id path int true "Category ID"
-// @Success 200 {object} post.CategoryResponse
+// @Success 200 {object} post.CategoryResponseDoc
 // @Failure 404 {object} utils.ErrorResponse
 // @Failure 500 {object} utils.ErrorResponse
 // @Router /v1/categories/{id} [get]
@@ -134,7 +134,7 @@ func GetCategoryByID(ctx *gin.Context) {
 // @Produce json
 // @Param id path int true "Category ID"
 // @Param request body post.CategoryRequest true "Category update request"
-// @Success 200 {object} post.CategoryResponse
+// @Success 200 {object} post.CategoryResponseDoc
 // @Failure 400 {object} utils.ValidationErrorResponse
 // @Failure 404 {object} utils.ErrorResponse
 // @Failure 500 {object} utils.ErrorResponse

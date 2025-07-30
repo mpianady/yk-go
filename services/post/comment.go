@@ -24,7 +24,7 @@ const (
 // @Description Get list of all comments
 // @Tags Comments
 // @Produce json
-// @Success 200 {array} commentDTO.CommentResponse
+// @Success 200 {array} commentDTO.CommentResponseDoc
 // @Failure 500 {object} utils.ErrorResponse
 // @Router /v1/comments/all [get]
 func GetAllComments(ctx *gin.Context) {
@@ -49,7 +49,7 @@ func GetAllComments(ctx *gin.Context) {
 // @Param id path string true "Post ID"
 // @Param page query int false "Page number"
 // @Param limit query int false "Items per page"
-// @Success 200 {object} utils.PaginatedResponse[post.CommentResponse]
+// @Success 200 {object} commentDTO.PaginatedCommentResponse
 // @Failure 400 {object} utils.ErrorResponse
 // @Failure 404 {object} utils.ErrorResponse
 // @Failure 500 {object} utils.ErrorResponse
